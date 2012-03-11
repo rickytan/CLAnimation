@@ -1,0 +1,305 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C4A7768150CB29500CD2188 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4A7767150CB29500CD2188 /* UIKit.framework */; };
+		9C4A776A150CB29500CD2188 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4A7769150CB29500CD2188 /* Foundation.framework */; };
+		9C4A776C150CB29500CD2188 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4A776B150CB29500CD2188 /* CoreGraphics.framework */; };
+		9C4A7772150CB29500CD2188 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C4A7770150CB29500CD2188 /* InfoPlist.strings */; };
+		9C4A7775150CB29500CD2188 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A7774150CB29500CD2188 /* main.m */; };
+		9C4A7778150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A7777150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.m */; };
+		9C4A777B150CB29500CD2188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C4A7779150CB29500CD2188 /* MainWindow.xib */; };
+		9C4A777E150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A777D150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.m */; };
+		9C4A7781150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C4A777F150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.xib */; };
+		9C4A778D150CB3D100CD2188 /* CLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A778C150CB3D100CD2188 /* CLAnimation.m */; };
+		9C4A778F150CCC9D00CD2188 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4A778E150CCC9D00CD2188 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9C4A7763150CB29500CD2188 /* cocos2d-like-uiview-animation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-like-uiview-animation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C4A7767150CB29500CD2188 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9C4A7769150CB29500CD2188 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9C4A776B150CB29500CD2188 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9C4A776F150CB29500CD2188 /* cocos2d-like-uiview-animation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cocos2d-like-uiview-animation-Info.plist"; sourceTree = "<group>"; };
+		9C4A7771150CB29500CD2188 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C4A7773150CB29500CD2188 /* cocos2d-like-uiview-animation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cocos2d-like-uiview-animation-Prefix.pch"; sourceTree = "<group>"; };
+		9C4A7774150CB29500CD2188 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9C4A7776150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cocos2d_like_uiview_animationAppDelegate.h; sourceTree = "<group>"; };
+		9C4A7777150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cocos2d_like_uiview_animationAppDelegate.m; sourceTree = "<group>"; };
+		9C4A777A150CB29500CD2188 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		9C4A777C150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cocos2d_like_uiview_animationViewController.h; sourceTree = "<group>"; };
+		9C4A777D150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cocos2d_like_uiview_animationViewController.m; sourceTree = "<group>"; };
+		9C4A7780150CB29500CD2188 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/cocos2d_like_uiview_animationViewController.xib; sourceTree = "<group>"; };
+		9C4A778B150CB3D100CD2188 /* CLAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAnimation.h; sourceTree = "<group>"; };
+		9C4A778C150CB3D100CD2188 /* CLAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAnimation.m; sourceTree = "<group>"; };
+		9C4A778E150CCC9D00CD2188 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C4A7760150CB29500CD2188 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4A778F150CCC9D00CD2188 /* QuartzCore.framework in Frameworks */,
+				9C4A7768150CB29500CD2188 /* UIKit.framework in Frameworks */,
+				9C4A776A150CB29500CD2188 /* Foundation.framework in Frameworks */,
+				9C4A776C150CB29500CD2188 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9C4A7758150CB29400CD2188 = {
+			isa = PBXGroup;
+			children = (
+				9C4A776D150CB29500CD2188 /* cocos2d-like-uiview-animation */,
+				9C4A7766150CB29500CD2188 /* Frameworks */,
+				9C4A7764150CB29500CD2188 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9C4A7764150CB29500CD2188 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C4A7763150CB29500CD2188 /* cocos2d-like-uiview-animation.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C4A7766150CB29500CD2188 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C4A778E150CCC9D00CD2188 /* QuartzCore.framework */,
+				9C4A7767150CB29500CD2188 /* UIKit.framework */,
+				9C4A7769150CB29500CD2188 /* Foundation.framework */,
+				9C4A776B150CB29500CD2188 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C4A776D150CB29500CD2188 /* cocos2d-like-uiview-animation */ = {
+			isa = PBXGroup;
+			children = (
+				9C4A7787150CB34900CD2188 /* CLAnimation */,
+				9C4A7776150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.h */,
+				9C4A7777150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.m */,
+				9C4A7779150CB29500CD2188 /* MainWindow.xib */,
+				9C4A777C150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.h */,
+				9C4A777D150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.m */,
+				9C4A777F150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.xib */,
+				9C4A776E150CB29500CD2188 /* Supporting Files */,
+			);
+			path = "cocos2d-like-uiview-animation";
+			sourceTree = "<group>";
+		};
+		9C4A776E150CB29500CD2188 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9C4A776F150CB29500CD2188 /* cocos2d-like-uiview-animation-Info.plist */,
+				9C4A7770150CB29500CD2188 /* InfoPlist.strings */,
+				9C4A7773150CB29500CD2188 /* cocos2d-like-uiview-animation-Prefix.pch */,
+				9C4A7774150CB29500CD2188 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9C4A7787150CB34900CD2188 /* CLAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				9C4A778B150CB3D100CD2188 /* CLAnimation.h */,
+				9C4A778C150CB3D100CD2188 /* CLAnimation.m */,
+			);
+			path = CLAnimation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9C4A7762150CB29500CD2188 /* cocos2d-like-uiview-animation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C4A7784150CB29500CD2188 /* Build configuration list for PBXNativeTarget "cocos2d-like-uiview-animation" */;
+			buildPhases = (
+				9C4A775F150CB29500CD2188 /* Sources */,
+				9C4A7760150CB29500CD2188 /* Frameworks */,
+				9C4A7761150CB29500CD2188 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocos2d-like-uiview-animation";
+			productName = "cocos2d-like-uiview-animation";
+			productReference = 9C4A7763150CB29500CD2188 /* cocos2d-like-uiview-animation.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C4A775A150CB29400CD2188 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 9C4A775D150CB29400CD2188 /* Build configuration list for PBXProject "cocos2d-like-uiview-animation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9C4A7758150CB29400CD2188;
+			productRefGroup = 9C4A7764150CB29500CD2188 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9C4A7762150CB29500CD2188 /* cocos2d-like-uiview-animation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9C4A7761150CB29500CD2188 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4A7772150CB29500CD2188 /* InfoPlist.strings in Resources */,
+				9C4A777B150CB29500CD2188 /* MainWindow.xib in Resources */,
+				9C4A7781150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C4A775F150CB29500CD2188 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4A7775150CB29500CD2188 /* main.m in Sources */,
+				9C4A7778150CB29500CD2188 /* cocos2d_like_uiview_animationAppDelegate.m in Sources */,
+				9C4A777E150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.m in Sources */,
+				9C4A778D150CB3D100CD2188 /* CLAnimation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9C4A7770150CB29500CD2188 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C4A7771150CB29500CD2188 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9C4A7779150CB29500CD2188 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C4A777A150CB29500CD2188 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		9C4A777F150CB29500CD2188 /* cocos2d_like_uiview_animationViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C4A7780150CB29500CD2188 /* en */,
+			);
+			name = cocos2d_like_uiview_animationViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9C4A7782150CB29500CD2188 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		9C4A7783150CB29500CD2188 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		9C4A7785150CB29500CD2188 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-like-uiview-animation/cocos2d-like-uiview-animation-Prefix.pch";
+				INFOPLIST_FILE = "cocos2d-like-uiview-animation/cocos2d-like-uiview-animation-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9C4A7786150CB29500CD2188 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-like-uiview-animation/cocos2d-like-uiview-animation-Prefix.pch";
+				INFOPLIST_FILE = "cocos2d-like-uiview-animation/cocos2d-like-uiview-animation-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C4A775D150CB29400CD2188 /* Build configuration list for PBXProject "cocos2d-like-uiview-animation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C4A7782150CB29500CD2188 /* Debug */,
+				9C4A7783150CB29500CD2188 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C4A7784150CB29500CD2188 /* Build configuration list for PBXNativeTarget "cocos2d-like-uiview-animation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C4A7785150CB29500CD2188 /* Debug */,
+				9C4A7786150CB29500CD2188 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C4A775A150CB29400CD2188 /* Project object */;
+}
