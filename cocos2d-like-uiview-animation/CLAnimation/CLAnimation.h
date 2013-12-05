@@ -8,10 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol CLTiming <NSObject>
+@required
+- (CGFloat)valueForValue:(CGFloat)value;    // f(0) = 0, f(1) = 1 must be applied!
+
+@end
+
 typedef CGFloat (^TimingBlock)(CGFloat);
 
-@interface CLTimingFunction : NSObject
+@interface CLTimingFunction : NSObject <CLTiming>
 + (id)timingFunctionWithTimingBlock:(TimingBlock)block;
++ (id)easeInFunctionWithRate:(CGFloat)rate;
++ (id)easeOutFunctionWithRate:(CGFloat)rate;
++ (id)elasticInFunctionWithRate:(CGFloat)rate;
++ (id)elasticOutFunctionWithRate:(CGFloat)rate;
 @end
 
 @interface CAAnimationSequence : CAAnimation
@@ -19,23 +30,80 @@ typedef CGFloat (^TimingBlock)(CGFloat);
 + (id)animationSequenceWithAnimations:(CAAnimation*)animation, ...;
 @end
 
-@interface CAAnimation (CLAnimation_Move)
+@interface CLAnimation : CAAnimation
+@end
+
+@interface CLAnimation (Move)
 
 + (id)animationMoveTo:(CGPoint)position;
 + (id)animationMoveTo:(CGPoint)position duration:(NSTimeInterval)duration;
 + (id)animationMoveBy:(CGPoint)position;
 + (id)animationMoveBy:(CGPoint)position duration:(NSTimeInterval)duration;
+
+@end
+
+@interface CLAnimation (EaseMove)
+
 + (id)animationMoveEaseInTo:(CGPoint)position;
 + (id)animationMoveEaseInBy:(CGPoint)position;
 + (id)animationMoveEaseOutTo:(CGPoint)position;
++ (id)animationMoveEaseOutBy:(CGPoint)position;
+
++ (id)animationMoveEaseInTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseInBy:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseOutTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseOutBy:(CGPoint)position duration:(NSTimeInterval)duration;
+
++ (id)animationMoveEaseInTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseInBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseOutTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseOutBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
+
+@end
+
+@interface CLAnimation (ElasticMove)
+
++ (id)animationMoveElasticInTo:(CGPoint)position;
++ (id)animationMoveElasticInBy:(CGPoint)position;
++ (id)animationMoveElasticOutTo:(CGPoint)position;
++ (id)animationMoveElasticOutBy:(CGPoint)position;
+
++ (id)animationMoveElasticInTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticInBy:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticOutTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticOutBy:(CGPoint)position duration:(NSTimeInterval)duration;
+
++ (id)animationMoveElasticInTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticInBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticOutTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveElasticOutBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
+
+@end
+
+@interface CLAnimation (BounceMove)
+
++ (id)animationMoveBounceInTo:(CGPoint)position;
++ (id)animationMoveBounceInBy:(CGPoint)position;
++ (id)animationMoveBounceOutTo:(CGPoint)position;
++ (id)animationMoveBounceOutBy:(CGPoint)position;
+
++ (id)animationMoveBounceInTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceInBy:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceOutTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceOutBy:(CGPoint)position duration:(NSTimeInterval)duration;
+
++ (id)animationMoveBounceInTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceInBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceOutTo:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
++ (id)animationMoveBounceOutBy:(CGPoint)position rate:(CGFloat)rate duration:(NSTimeInterval)duration;
 
 @end
 
 @interface UIView (CLAnimation)
 
-//+ (void)beginSequenceCLAnimations:(NSString *)animationID;
-//+ (void)beginSpanCLAnimations:(NSString *)animationID;
-//+ (void)commitCLAnimations;
++ (void)beginSequentialAnimations:(NSString *)animationID
+                          context:(void *)context;
++ (void)commitSequentialAnimations;
 
 
 - (void)addSequentialAnimations:(CAAnimation*)animation, ...;

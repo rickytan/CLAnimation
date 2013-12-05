@@ -32,11 +32,12 @@
     
     va_list anim;
     va_start(anim, animation);
-    CAAnimation* value = va_start(anim, animation);
+    CAAnimation* value = va_arg(anim, CAAnimation *);
     while (value) {
         [arr addObject:value];
-        value = va_arg(anim, CAAnimation*);
+        value = va_arg(anim, CAAnimation *);
     }
+    va_end(anim);
     
     sequence.animations = [NSArray arrayWithArray:arr];
     return sequence;
@@ -119,11 +120,124 @@
 
 @end
 
+@implementation NSValue (Interpolation)
+
+- (NSValue *)interpolatedValueWithProgress:(double)progress toTargetValue:(NSValue *)target
+{
+    const char *sourceType = [self objCType];
+    const char *targetType = [target objCType];
+    if (strcmp(sourceType, targetType) != 0) {
+        // Types don't match!
+        return nil;
+    }
+    CGFloat remainingProgress = 1.0 - progress;
+    if (strcmp(targetType, @encode(CGPoint)) == 0) {
+        CGPoint sourceValue = [self CGPointValue];
+        CGPoint targetValue = [target CGPointValue];
+        CGPoint finalValue;
+        finalValue.x = sourceValue.x * remainingProgress + targetValue.x * progress;
+        finalValue.y = sourceValue.y * remainingProgress + targetValue.y * progress;
+        return [NSValue valueWithCGPoint:finalValue];
+    }
+    if (strcmp(targetType, @encode(CGSize)) == 0) {
+        CGSize sourceValue = [self CGSizeValue];
+        CGSize targetValue = [target CGSizeValue];
+        CGSize finalValue;
+        finalValue.width = sourceValue.width * remainingProgress + targetValue.width * progress;
+        finalValue.height = sourceValue.height * remainingProgress + targetValue.height * progress;
+        return [NSValue valueWithCGSize:finalValue];
+    }
+    if (strcmp(targetType, @encode(CGRect)) == 0) {
+        CGRect sourceValue = [self CGRectValue];
+        CGRect targetValue = [target CGRectValue];
+        CGRect finalValue;
+        finalValue.origin.x = sourceValue.origin.x * remainingProgress + targetValue.origin.x * progress;
+        finalValue.origin.y = sourceValue.origin.y * remainingProgress + targetValue.origin.y * progress;
+        finalValue.size.width = sourceValue.size.width * remainingProgress + targetValue.size.width * progress;
+        finalValue.size.height = sourceValue.size.height * remainingProgress + targetValue.size.height * progress;
+        return [NSValue valueWithCGRect:finalValue];
+    }
+    // TODO: Add more types
+    return nil;
+}
+
+@end
+
+@implementation NSNumber (Interpolation)
+
+- (NSValue *)interpolatedValueWithProgress:(double)progress toTargetValue:(NSValue *)target
+{
+    if (![target isKindOfClass:[NSNumber class]])
+        return nil;
+    double sourceValue = [self doubleValue];
+    double targetValue = [(NSNumber *)target doubleValue];
+    double finalValue = sourceValue * (1.0 - progress) + targetValue * progress;
+    return [NSNumber numberWithDouble:finalValue];
+}
+
+@end
+
+const NSTimeInterval CLAnimationDefaultDuration = 0.35;
+
+@implementation CLAnimation
+@end
+
+@implementation CLAnimation (Move)
+
++ (id)animationMoveTo:(CGPoint)position duration:(NSTimeInterval)duration
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.toValue = [NSValue valueWithCGPoint:position];
+    animation.duration = duration;
+    animation.removedOnCompletion = YES;
+    return animation;
+}
+
++ (id)animationMoveTo:(CGPoint)position
+{
+    return [self animationMoveTo:position
+                        duration:CLAnimationDefaultDuration];
+}
+
++ (id)animationMoveBy:(CGPoint)position duration:(NSTimeInterval)duration
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.byValue = [NSValue valueWithCGPoint:position];
+    animation.duration = duration;
+    animation.removedOnCompletion = YES;
+    return animation;
+}
+
++ (id)animationMoveBy:(CGPoint)position
+{
+    return [self animationMoveBy:position
+                        duration:CLAnimationDefaultDuration];
+}
+
+@end
+
+@implementation CLAnimation (EaseMove)
+
++ (id)animationMoveEaseInBy:(CGPoint)position
+                       rate:(CGFloat)rate
+                   duration:(NSTimeInterval)duration
+{
+    return nil;
+}
+
+@end
+
+@implementation CLAnimation (ElasticMove)
+
+@end
+
+@implementation CLAnimation (BounceMove)
+
+@end
+
 static NSString *DEFAULT_KEY = @"CLAnimation";
 
-static const NSInteger DEFAULT_OPTIONS = UIViewAnimationOptionAllowAnimatedContent |
-UIViewAnimationOptionAllowUserInteraction |
-UIViewAnimationOptionBeginFromCurrentState;
+static const NSInteger DEFAULT_OPTIONS = UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
 static BOOL runImmediately = YES;
 
@@ -238,18 +352,25 @@ static BOOL runImmediately = YES;
 
 @end
 
+static NSMutableArray * sequenceAnimationArray = nil;
+
 @implementation UIView (CLAnimation)
-/*
-+ (void)beginSequenceCLAnimations:(NSString *)animationID
+
++ (void)beginSequentialAnimations:(NSString *)animationID
+                          context:(void *)context
 {
+    if (!sequenceAnimationArray) {
+        sequenceAnimationArray = [[NSMutableArray alloc] init];
+    }
     runImmediately = NO;
 }
 
-+ (void)commitCLAnimations
++ (void)commitSequentialAnimations
 {
-    runImmediately = YES;
+    CAAnimationSequence *sequence = [CAAnimationSequence animation];
+    sequence.animations = [NSArray arrayWithArray:sequenceAnimationArray];
 }
-*/
+
 - (void)moveTo:(CGPoint)point
 {
     [self moveTo:point duration:0.35];
@@ -267,7 +388,7 @@ static BOOL runImmediately = YES;
         self.layer.position = point;
     }
     else {
-        
+//        animation.byValue
     }
 }
 

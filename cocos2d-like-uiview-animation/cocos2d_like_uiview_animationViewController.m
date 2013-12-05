@@ -50,8 +50,13 @@
 
 - (IBAction)moveTo:(id)sender
 {
+    CAAnimationSequence *sequence = [CAAnimationSequence animationSequenceWithAnimations:[CABasicAnimation animationMoveBy:CGPointMake(200, 500)], [CABasicAnimation animationMoveEaseInTo:CGPointMake(600, 600)], nil];
+    [self.animateView.layer addAnimation:sequence
+                                  forKey:@"Move"];
+    /*
     self.animateView.center = CGPointMake(100, 100);
     [self.animateView moveTo:CGPointMake(700, 700)];
+     */
 }
 
 - (IBAction)moveEaseInTo:(id)sender
