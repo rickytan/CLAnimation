@@ -8,12 +8,38 @@
 
 #import <Foundation/Foundation.h>
 
+typedef CGFloat (^TimingBlock)(CGFloat);
+
+@interface CLTimingFunction : NSObject
++ (id)timingFunctionWithTimingBlock:(TimingBlock)block;
+@end
+
+@interface CAAnimationSequence : CAAnimation
+@property (nonatomic, copy) NSArray *animations;
++ (id)animationSequenceWithAnimations:(CAAnimation*)animation, ...;
+@end
+
+@interface CAAnimation (CLAnimation_Move)
+
++ (id)animationMoveTo:(CGPoint)position;
++ (id)animationMoveTo:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveBy:(CGPoint)position;
++ (id)animationMoveBy:(CGPoint)position duration:(NSTimeInterval)duration;
++ (id)animationMoveEaseInTo:(CGPoint)position;
++ (id)animationMoveEaseInBy:(CGPoint)position;
++ (id)animationMoveEaseOutTo:(CGPoint)position;
+
+@end
 
 @interface UIView (CLAnimation)
 
-+ (void)beginSequenceCLAnimations:(NSString *)animationID;
-+ (void)beginSpanCLAnimations:(NSString *)animationID;
-+ (void)commitCLAnimations;
+//+ (void)beginSequenceCLAnimations:(NSString *)animationID;
+//+ (void)beginSpanCLAnimations:(NSString *)animationID;
+//+ (void)commitCLAnimations;
+
+
+- (void)addSequentialAnimations:(CAAnimation*)animation, ...;
+
 
     // Position Based Animation
 - (void)moveTo:(CGPoint)point;

@@ -1,13 +1,123 @@
-    //
-    //  CLAnimation.m
-    //  cocos2d-like-uiview-animation
-    //
-    //  Created by ricky on 12-3-11.
-    //  Copyright 2012年 __MyCompanyName__. All rights reserved.
-    //
+//
+//  CLAnimation.m
+//  cocos2d-like-uiview-animation
+//
+//  Created by ricky on 12-3-11.
+//  Copyright 2012年 __MyCompanyName__. All rights reserved.
+//
 
 #import "CLAnimation.h"
 #import <QuartzCore/QuartzCore.h>
+
+@interface CAAnimationSequence ()
+{
+@private
+    NSMutableArray              * _animations;
+    
+    NSString                    * _event;
+    id                            _object;
+    NSDictionary                * _dict;
+    
+}
+@end
+
+@implementation CAAnimationSequence
+@synthesize animations = _animations;
+
++ (id)animationSequenceWithAnimations:(CAAnimation *)animation, ...
+{
+    CAAnimationSequence *sequence = [CAAnimationSequence animation];
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    
+    va_list anim;
+    va_start(anim, animation);
+    CAAnimation* value = va_start(anim, animation);
+    while (value) {
+        [arr addObject:value];
+        value = va_arg(anim, CAAnimation*);
+    }
+    
+    sequence.animations = [NSArray arrayWithArray:arr];
+    return sequence;
+}
+
+- (void)dealloc
+{
+    [_animations release];
+    [_event release];
+    [_object release];
+    [_dict release];
+    [super dealloc];
+}
+
+- (void)setAnimations:(NSArray *)animations
+{
+    if (_animations != animations) {
+        [_animations release];
+        _animations = [animations mutableCopy];
+        
+        CFTimeInterval duration = 0.0;
+        for (CAAnimation *anim in _animations) {
+            //NSAssert(anim.repeatCount == 0.0, @"Can't add any animation that repeats!");
+            anim.delegate = self;
+            duration += anim.duration;
+        }
+        self.duration = duration;
+    }
+}
+
+- (void)runNext
+{
+    if (self.animations.count) {
+        CAAnimation *first = self.animations[0];
+        [first runActionForKey:_event
+                        object:_object
+                     arguments:_dict];
+    }
+    else {
+        if ([self.delegate respondsToSelector:@selector(animationDidStop:finished:)])
+            [self.delegate animationDidStop:self
+                                   finished:YES];
+    }
+}
+
+- (void)runActionForKey:(NSString *)event
+                 object:(id)anObject
+              arguments:(NSDictionary *)dict
+{
+    _event = [event retain];
+    _object = [anObject retain];
+    _dict = [_dict retain];
+    
+    [self runNext];
+    
+    if ([self.delegate respondsToSelector:@selector(animationDidStart:)])
+        [self.delegate animationDidStart:self];
+}
+
+#pragma mark - CAAnimation Delegate
+
+- (void)animationDidStart:(CAAnimation *)anim
+{
+    
+}
+
+- (void)animationDidStop:(CAAnimation *)anim
+                finished:(BOOL)flag
+{
+    if (flag) {
+        [_animations removeObject:anim];
+        [self runNext];
+    }
+    else {
+        if ([self.delegate respondsToSelector:@selector(animationDidStop:finished:)])
+            [self.delegate animationDidStop:self
+                                   finished:NO];
+    }
+}
+
+@end
 
 static NSString *DEFAULT_KEY = @"CLAnimation";
 
@@ -17,15 +127,13 @@ UIViewAnimationOptionBeginFromCurrentState;
 
 static BOOL runImmediately = YES;
 
-typedef CGFloat (^TimingBlock)(CGFloat);
-
 
 @interface CABasicAnimation (CLAnimation)
-+ (id)animationPositionFrom:(CGPoint)start 
-                         to:(CGPoint)end 
++ (id)animationPositionFrom:(CGPoint)start
+                         to:(CGPoint)end
                    duration:(NSTimeInterval)duration;
-+ (id)animationScaleFrom:(CGPoint)start 
-                      to:(CGPoint)end 
++ (id)animationScaleFrom:(CGFloat)start
+                      to:(CGFloat)end
                 duration:(NSTimeInterval)duration;
 @end
 
@@ -44,26 +152,39 @@ typedef CGFloat (^TimingBlock)(CGFloat);
     return animation;
 }
 
++ (id)animationScaleFrom:(CGFloat)start
+                      to:(CGFloat)end
+                duration:(NSTimeInterval)duration
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"scale"];
+    animation.fromValue = [NSNumber numberWithFloat:start];
+    animation.toValue = [NSNumber numberWithFloat:end];
+    animation.duration = duration;
+    animation.repeatCount = 0;
+    
+    return animation;
+}
+
 @end
 
 @interface CAKeyframeAnimation (CLAnimation)
-+ (id)animationPositionFrom:(CGPoint)start 
-                         to:(CGPoint)end 
++ (id)animationPositionFrom:(CGPoint)start
+                         to:(CGPoint)end
                    duration:(NSTimeInterval)duration
-                     frames:(NSInteger)frames 
+                     frames:(NSInteger)frames
             withTimingBlock:(TimingBlock)block;
-+ (id)animationScaleFrom:(CGFloat)start 
-                      to:(CGFloat)end 
++ (id)animationScaleFrom:(CGFloat)start
+                      to:(CGFloat)end
                 duration:(NSTimeInterval)duration
-                  frames:(NSInteger)frames 
+                  frames:(NSInteger)frames
          withTimingBlock:(TimingBlock)block;
 @end
 
 @implementation CAKeyframeAnimation (CLAnimation)
 
-+ (id)animationPositionFrom:(CGPoint)start 
-                         to:(CGPoint)end 
-                   duration:(NSTimeInterval)duration 
++ (id)animationPositionFrom:(CGPoint)start
+                         to:(CGPoint)end
+                   duration:(NSTimeInterval)duration
                      frames:(NSInteger)frames
             withTimingBlock:(TimingBlock)block
 {
@@ -78,7 +199,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
     CGFloat timeStep = 1.0f / (frames - 1);
     CGPoint delta = CGPointMake(end.x - start.x, end.y - start.y);
     for (int i=0; i<frames ; ++i) {
-        CGPoint p = CGPointMake(start.x + block(time)*delta.x, 
+        CGPoint p = CGPointMake(start.x + block(time)*delta.x,
                                 start.y + block(time)*delta.y);
         [values addObject:[NSValue valueWithCGPoint:p]];
         time += timeStep;
@@ -98,7 +219,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
     animation.calculationMode = kCAAnimationLinear;
     animation.repeatCount = 0;
     animation.duration = duration;
-
+    
     NSMutableArray *values = [NSMutableArray arrayWithCapacity:frames];
     CGFloat time = 0.0f;
     NSAssert(frames > 1,@"Frames must be larger than 1");
@@ -118,7 +239,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
 @end
 
 @implementation UIView (CLAnimation)
-
+/*
 + (void)beginSequenceCLAnimations:(NSString *)animationID
 {
     runImmediately = NO;
@@ -128,7 +249,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
 {
     runImmediately = YES;
 }
-
+*/
 - (void)moveTo:(CGPoint)point
 {
     [self moveTo:point duration:0.35];
@@ -236,7 +357,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
             float p = 0.3f;
             float s = p / 4.0f;
             float invRatio = ratio - 1.0f;
-            return -1.0f * powf(2.0f, 8.0f*invRatio) * sinf((invRatio-s)*2*M_PI/p);        
+            return -1.0f * powf(2.0f, 8.0f*invRatio) * sinf((invRatio-s)*2*M_PI/p);
         }
     };
     
@@ -266,7 +387,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
     TimingBlock block = ^(CGFloat ratio){
         if (ratio == 0.0f || ratio == 1.0f)
             return ratio;
-        else 
+        else
         {
             float p = 0.3f;
             float s = p / 4.0f;
@@ -307,7 +428,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
             l = s * powf(ratio, 2.0f);
         }
         else
-        {    
+        {
             if (ratio < (2.0f/p))
             {
                 ratio -= 1.5f/p;
@@ -349,14 +470,14 @@ typedef CGFloat (^TimingBlock)(CGFloat);
 - (void)bezierTo:(CGPoint)point withControlPoint0:(CGPoint)p0 andControlPoint1:(CGPoint)p1
 {
     [self bezierTo:point
- withControlPoint0:p0 
+ withControlPoint0:p0
   andControlPoint1:p1
           duration:0.35];
 }
 - (void)bezierTo:(CGPoint)point withControlPoint0:(CGPoint)p0 andControlPoint1:(CGPoint)p1 duration:(NSTimeInterval)duration
 {
     CGMutablePathRef path = CGPathCreateMutable();
-
+    
     CGPathMoveToPoint(path, nil, self.center.x, self.center.y);
     CGPathAddCurveToPoint(path, nil, p0.x, p0.y, p1.x, p1.y, point.x, point.y);
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
@@ -385,7 +506,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
     TimingBlock block = ^(CGFloat ratio){
         if (ratio == 0.0f || ratio == 1.0f)
             return ratio;
-        else 
+        else
         {
             float p = 0.3f;
             float s = p / 4.0f;
@@ -408,7 +529,7 @@ typedef CGFloat (^TimingBlock)(CGFloat);
         
     }
 }
-                                      
+
 
 
 - (void)fadeIn
